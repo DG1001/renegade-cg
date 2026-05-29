@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1b2230">
+<title>Renegade · Schwerpunkt</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Renegade SP">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <img src="icons/icon.svg" alt="" class="logo">
+    <div>
+      <h1 id="acftName">Renegade</h1>
+      <p class="sub">Schwerpunkt &amp; Beladung</p>
+    </div>
+  </div>
+  <button id="settingsBtn" class="icon-btn" aria-label="Einstellungen" title="Einstellungen">&#9881;</button>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-tab="load" role="tab">Beladung</button>
+  <button class="tab" data-tab="weigh" role="tab">Wägung</button>
+</nav>
+
+<main>
+  <!-- ============ BELADUNG ============ -->
+  <section id="tab-load" class="panel active">
+
+    <div class="card">
+      <div class="card-head">
+        <h2>Leerwerte</h2>
+        <span class="hint">aus Wägebericht</span>
+      </div>
+      <div class="grid2">
+        <label class="field">
+          <span>Leermasse</span>
+          <div class="inwrap"><input id="emptyMass" type="number" inputmode="decimal" step="0.1"><i>kg</i></div>
+        </label>
+        <label class="field">
+          <span>Leerschwerpunkt</span>
+          <div class="inwrap"><input id="emptyCg" type="number" inputmode="decimal" step="0.001"><i>m</i></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>Zuladung</h2><span class="hint">Hebelarme editierbar in &#9881;</span></div>
+      <div id="loadRows"></div>
+    </div>
+
+    <div class="card result" id="resultCard">
+      <div class="result-top">
+        <div class="rblock">
+          <span class="rlabel">Abflugmasse</span>
+          <span class="rval"><b id="totMass">–</b> kg</span>
+          <span class="rsub" id="massSub">MTOW 472,5 kg</span>
+        </div>
+        <div class="rblock">
+          <span class="rlabel">Schwerpunkt</span>
+          <span class="rval"><b id="totCg">–</b> m</span>
+          <span class="rsub" id="cgSub">0,340 – 0,440 m</span>
+        </div>
+      </div>
+
+      <div class="status" id="statusBox">–</div>
+
+      <div class="gauge">
+        <div class="gauge-label"><span>Schwerpunkt-Hülle</span><span id="cgRangeTxt"></span></div>
+        <div class="track">
+          <div class="band" id="cgBand"></div>
+          <div class="marker" id="cgMarker"><span id="cgMarkerTxt"></span></div>
+        </div>
+        <div class="ticks"><span id="tickMin"></span><span id="tickMax"></span></div>
+      </div>
+
+      <div class="gauge">
+        <div class="gauge-label"><span>Masse</span><span id="massPctTxt"></span></div>
+        <div class="track">
+          <div class="fill" id="massFill"></div>
+          <div class="mtow-line"></div>
+        </div>
+      </div>
+
+      <table class="momtable" id="momTable"></table>
+    </div>
+  </section>
+
+  <!-- ============ WÄGUNG ============ -->
+  <section id="tab-weigh" class="panel">
+    <div class="card">
+      <div class="card-head"><h2>Leergewichts-Wägung</h2></div>
+      <p class="note">UL in Flugposition (Flügelhauptbeschläge horizontal). Radlasten und Spornlast wiegen, Abstand Hauptfahrwerk → Spornnabe messen.</p>
+      <div class="grid2">
+        <label class="field"><span>Radlast links</span><div class="inwrap"><input id="wLeft" type="number" inputmode="decimal" step="0.1"><i>kg</i></div></label>
+        <label class="field"><span>Radlast rechts</span><div class="inwrap"><input id="wRight" type="number" inputmode="decimal" step="0.1"><i>kg</i></div></label>
+        <label class="field"><span>Spornlast</span><div class="inwrap"><input id="wTail" type="number" inputmode="decimal" step="0.1"><i>kg</i></div></label>
+        <label class="field"><span>Abstand HFW→Sporn</span><div class="inwrap"><input id="wDist" type="number" inputmode="decimal" step="0.001"><i>m</i></div></label>
+      </div>
+    </div>
+
+    <div class="card result">
+      <div class="result-top">
+        <div class="rblock"><span class="rlabel">Leermasse</span><span class="rval"><b id="wMass">–</b> kg</span></div>
+        <div class="rblock"><span class="rlabel">Leerschwerpunkt</span><span class="rval"><b id="wCg">–</b> m</span><span class="rsub" id="wCgSub">Soll 0,215 ± 0,040 m</span></div>
+      </div>
+      <div class="status" id="wStatus">–</div>
+      <button id="applyEmpty" class="btn primary">Als Leerwerte übernehmen</button>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span id="installState"></span>
+  <button id="installBtn" class="btn ghost" hidden>App installieren</button>
+  <p class="disclaimer">Ohne Gewähr — verbindlich ist allein das Flug- und Betriebshandbuch der Renegade (Rev. 2-07). Werte vor jedem Flug prüfen.</p>
+</footer>
+
+<!-- ============ EINSTELLUNGEN ============ -->
+<div id="settings" class="modal" hidden>
+  <div class="modal-card">
+    <div class="card-head"><h2>Einstellungen</h2><button id="closeSettings" class="icon-btn">&times;</button></div>
+    <label class="field"><span>Kennzeichen / Name</span><div class="inwrap"><input id="setName" type="text"></div></label>
+
+    <h3>Grenzwerte</h3>
+    <div class="grid2">
+      <label class="field"><span>MTOW</span><div class="inwrap"><input id="setMtow" type="number" step="0.1"><i>kg</i></div></label>
+      <label class="field"><span>Max. Gepäck</span><div class="inwrap"><input id="setMaxBag" type="number" step="0.1"><i>kg</i></div></label>
+      <label class="field"><span>SP vorne</span><div class="inwrap"><input id="setCgFwd" type="number" step="0.001"><i>m</i></div></label>
+      <label class="field"><span>SP hinten</span><div class="inwrap"><input id="setCgAft" type="number" step="0.001"><i>m</i></div></label>
+    </div>
+
+    <h3>Hebelarme</h3>
+    <div id="armRows" class="grid2"></div>
+
+    <h3>Kraftstoff</h3>
+    <label class="field"><span>Dichte (Liter → kg)</span><div class="inwrap"><input id="setFuelDensity" type="number" step="0.001"><i>kg/l</i></div></label>
+
+    <div class="modal-actions">
+      <button id="resetDefaults" class="btn ghost">Standard wiederherstellen</button>
+      <button id="saveSettings" class="btn primary">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
