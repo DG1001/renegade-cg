@@ -7,6 +7,12 @@ Kap. 3*.
 > ⚠️ **Ohne Gewähr.** Verbindlich ist allein das Flug- und Betriebshandbuch des
 > jeweiligen Luftfahrzeugs. Werte vor jedem Flug prüfen.
 
+<p>
+  <img src="docs/beladung.png" alt="Beladung" width="270">
+  &nbsp;
+  <img src="docs/waegung.png" alt="Wägung" width="270">
+</p>
+
 ## Funktionen
 - **Beladung** – Abflugmasse & Schwerpunkt für den Flug aus Leerwerten + Zuladung
   (Pilot/hinten, Passagier/vorne, Kraftstoff, Sammeltank, Gepäck). Ampel + Hüllen­diagramm
